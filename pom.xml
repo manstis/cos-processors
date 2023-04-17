@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.bf2</groupId>
+  <artifactId>cos-processors</artifactId>
+  <packaging>pom</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <properties>
+    <compiler-plugin.version>3.8.1</compiler-plugin.version>
+    <maven.compiler.release>11</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!--
+      Camel, Quarkus and Camel-Quarkus dependency matrix taken from: https://camel.apache.org/camel-quarkus/3.0.x/
+
+      Remember, we need to use versions of the dependencies that have a productized version for the downstream build
+     -->
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+    <quarkus.platform.version>2.13.2.Final</quarkus.platform.version>
+    <camel-k-runtime.version>1.16.0</camel-k-runtime.version>
+
+    <skipITs>true</skipITs>
+    <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>quarkus-camel-bom</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel.k</groupId>
+        <artifactId>camel-k-runtime-bom</artifactId>
+        <version>${camel-k-runtime.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <modules>
+    <module>cos-processor-camel</module>
+  </modules>
+
+
+</project>

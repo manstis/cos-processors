@@ -1,0 +1,27 @@
+#
+# This example shows the Camel-K Traits that are required on the Integration resource provisioned for each Processor
+#
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: kafka
+  namespace: default
+spec:
+  traits:
+    jvm:
+      configuration:
+        enabled: false # Disables classpath generation by Camel-K and defaults to the built image classpath
+    container:
+      configuration:
+        image: quay.io/rblake/cos-processor-camel:0.0.2-SNAPSHOT # Image is provided to the data plane in the payload from the Agent API. Image name/tag is an example
+  flows:
+    - from:
+        uri: "kafka:rblake-source"
+        steps:
+          - unmarshal:
+              json: { }
+          - log: "receiving event from the Kafka Topic"
+          - marshal:
+              json: { }
+          - to:
+              uri: "log:foo"
